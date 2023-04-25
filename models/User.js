@@ -1,66 +1,67 @@
 const { Schema, Types, model } = require('mongoose');
+const bcrypt = require('bcrypt');
 
-// Define a reaction schema to be used as a subdocument in the thought schema
-const reactionSchema = new Schema(
+const userSchema = new Schema(
   {
-    reactionBody: {
-      type: String,
-      required: true,
-      maxlength: 280,
-    },
     username: {
       type: String,
+      unique: true,
       required: true,
+      trim: true
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/.+@.+\..+/, 'Please enter a valid e-mail address']
     },
+    password: {
+      type: String,
+      required: true,
+      minlength: 5
+    },
+    thoughts: [
+      {
+        type: Types.ObjectId,
+        ref: 'Thought'
+      }
+    ],
+    friends: [
+      {
+        type: Types.ObjectId,
+        ref: 'User'
+      }
+    ]
   },
   {
-    toJSON: { virtuals: true },
+    toJSON: {
+      virtuals: true,
+      getters: true
+    },
     id: false
   }
 );
 
-// Define the thought schema for creating the Thought model
-const thoughtSchema = new Schema(
-  {
-    thoughtText: {
-      type: String,
-      required: true,
-      minlength: 1,
-      maxlength: 150,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    reactions: [reactionSchema], // use the reaction schema as a subdocument
-  },
-  {
-    toJSON: { virtuals: true },
-    id: false,
+// Hash user password on save
+userSchema.pre('save', async function (next) {
+  if (this.isNew || this.isModified('password')) {
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
   }
-);
-
-// Define a virtual to get the number of reactions for a thought
-thoughtSchema.virtual('reactionCount').get(function () {
-  return this.reactions.length;
+  next();
 });
 
-// Define a virtual to format the createdAt date
-thoughtSchema.virtual('formattedCreatedAt').get(function () {
-  return new Date(this.createdAt).toLocaleString('en-US', {
-    timeZone: 'America/Los_Angeles',
-  });
+// Compare the entered password with the hashed password in the database
+userSchema.methods.isCorrectPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+// Get the total count of friends
+userSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
 });
 
-// Define the Thought model
-const Thought = model('Thought', thoughtSchema);
+const User = model('User', userSchema);
 
-module.exports = Thought;
+module.exports = User;
+

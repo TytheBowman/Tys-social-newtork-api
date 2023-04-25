@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const Reaction = require('./Reaction');
 const { formatDate } = require('../helpers/helpers');
 
 /**
@@ -24,8 +23,27 @@ const thoughtSchema = new Schema(
       type: String,
       required: true,
     },
-    // An array of reactions associated with the thought.
-    reactions: [Reaction],
+    // An array of reaction objects associated with the thought.
+    reactions: [
+      {
+        // The content of the reaction.
+        reactionBody: {
+          type: String,
+          required: true,
+          maxlength: 280,
+        },
+        // The user who created the reaction.
+        username: {
+          type: String,
+          required: true,
+        },
+        // The timestamp when the reaction was created.
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   {
     // Include virtuals in the JSON representation of the schema.

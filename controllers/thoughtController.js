@@ -2,7 +2,7 @@ const { User, Thought } = require('../models');
 const { trimId } = require('../helpers/helpers');
 
 module.exports = {
-  // Get all thoughts
+  // Gets all thoughts
   getThoughts(req, res) {
     Thought.find()
       .then(async (thoughts) => {
@@ -17,7 +17,7 @@ module.exports = {
       });
   },
 
-  // Get a single thought
+  // Gets a single thought
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId})
       // .select('-__v')
@@ -35,7 +35,7 @@ module.exports = {
       });
   },
 
-  // create a new thought
+  // creates a new thought
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
@@ -54,7 +54,7 @@ module.exports = {
       });
   },
 
-  // Delete a thought
+  // Deletes a thought
   deleteThought(req, res) {
     Thought.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
@@ -76,7 +76,7 @@ module.exports = {
       });
   },
   
-  // Update the text of a thought
+  // Updates the text of a thought
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -91,7 +91,7 @@ module.exports = {
     .catch((err) => res.status(500).json(err));
   },
   
-  // create a reaction
+  // creates a reaction
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
@@ -106,7 +106,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   
-  // Remove a reaction from a thought
+  // Removes a reaction from a thought
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },

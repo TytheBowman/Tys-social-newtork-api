@@ -1,7 +1,7 @@
 const { User, Thought } = require('../models');
 
 module.exports = {
-// Get all users
+// Gets all users
 getAllUsers(req, res) {
 User.find()
 .then((users) => {
@@ -15,7 +15,7 @@ console.log(err);
 return res.status(500).json({ message: 'Unable to retrieve users' });
 });
 },
-// Get a single user
+// Gets a single user
 getSingleUser(req, res) {
 User.findOne({ _id: req.params.userId})
 .lean()
@@ -29,13 +29,13 @@ console.log(err);
 return res.status(500).json({ message: 'Unable to retrieve user' });
 });
 },
-// Create a new user
+// Creates a new user
 createUser(req, res) {
 User.create(req.body)
 .then((user) => res.json({ message: 'User created successfully', user }))
 .catch((err) => res.status(500).json({ message: 'Unable to create user' }));
 },
-// Delete a user and their associated thoughts
+// Deletes a user and their associated thoughts
 deleteUser(req, res) {
 User.findOneAndRemove({ _id: req.params.userId })
 .then((user) => {
@@ -50,7 +50,7 @@ console.log(err);
 return res.status(500).json({ message: 'Unable to delete user and thoughts' });
 });
 },
-// Update a username and/or email address
+// Updates a username and/or email address
 updateUser(req, res) {
 User.findOneAndUpdate(
 {_id: req.params.userId},
@@ -64,7 +64,7 @@ User.findOneAndUpdate(
 )
 .catch((err) => res.status(500).json({ message: 'Unable to update user' }));
 },
-// Add a friend
+// Adds a friend
 addFriend(req,res) {
 User.findOneAndUpdate(
 {_id: req.params.userId},
@@ -78,7 +78,7 @@ User.findOneAndUpdate(
 )
 .catch((err) => res.status(500).json({ message: 'Unable to add friend' }));
 },
-// Delete a friend
+// Deletes a friend
 deleteFriend(req,res) {
 User.findOneAndUpdate(
 { _id: req.params.userId },

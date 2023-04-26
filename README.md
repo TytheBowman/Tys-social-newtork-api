@@ -8,7 +8,7 @@ Table of Contents
 =================
 * [Installation Instructions](#installation-instructions)
 * [Usage Instructions](#usage)
-
+* [Contribution Guidelines](#contribution-guidelines)
 
 ## Installation Instructions
 1.  Clone the reop and npm i .
@@ -16,5 +16,6 @@ Table of Contents
 ## Usage
 The app should be started at a terminal prompt by typing "node index.js"
 
-
+## Contribution Guidelines
+John Yeager and Benjamin Sprenger assisted through zoom whike I screenshared. They assisted by refactoring by words and I typed. Even though app isn't fully functional due to errors i wanted to provide a MVP for any grade recieved. Thank you 
 

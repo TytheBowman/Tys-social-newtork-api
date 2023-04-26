@@ -11,7 +11,7 @@ Table of Contents
 * [Contribution Guidelines](#contribution-guidelines)
 
 ## Installation Instructions
-1.  Clone the reop and npm i .
+1.  Clone the repo and npm i .
 
 ## Usage
 The app should be started at a terminal prompt by typing "node index.js"

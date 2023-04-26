@@ -1,11 +1,9 @@
 const { Schema, Types } = require('mongoose');
 
-/**
- * A Mongoose schema for a reaction object.
- */
+// Define a new schema for the reaction object.
 const reactionSchema = new Schema(
   {
-    // A unique identifier for the reaction.
+    // Generate a unique identifier for the reaction.
     reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
@@ -14,7 +12,7 @@ const reactionSchema = new Schema(
     reactionBody: {
       type: String,
       required: true,
-      maxlength: 280,
+      maxlength: 150,
     },
     // The timestamp when the reaction was created.
     createdAt: {
@@ -37,5 +35,9 @@ const reactionSchema = new Schema(
   }
 );
 
-// Export the reactionSchema for use in other parts of the application.
-module.exports = reactionSchema;
+// Create a new Mongoose model based on the reaction schema.
+const Reaction = mongoose.model('Reaction', reactionSchema);
+
+// Export the Reaction model for use in other parts of the application.
+module.exports = Reaction;
+

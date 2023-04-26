@@ -19,6 +19,6 @@ app.use(routes);
 // Connecting to the database and starting the server
 db.once('open', () => {
   app.listen(PORT, () => {
-    console.log(`API server running on port ${PORT}!`);
+    console.log(`API server is now running on port ${PORT}!`);
   });
 });

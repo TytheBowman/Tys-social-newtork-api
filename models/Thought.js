@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { formatDate } = require('../helpers/helpers');
+const { formatDate } = require('../utils/helpers');
 
 /**
  * A Mongoose schema for a thought object.
